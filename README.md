@@ -43,9 +43,9 @@ make format
 
 ---
 
-## ✅ Qué tienes ya con esto
+## ✅ We get
 
-| Componente | Propósito |
+| Component | Goal |
 |-------------|------------|
 | Config central | Validada con Pydantic |
 | Logger común | Estandarizado a nivel app |
