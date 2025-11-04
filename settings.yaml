@@ -1,0 +1,17 @@
+app:
+  name: "MyApp Core"
+  version: "0.1"
+  mode: "development"
+
+logging:
+  level: "INFO"
+  file: "logs/app.log"
+
+ai:
+  model: "local-llm"
+  max_new_tokens: 256
+  temperature: 0.7
+
+database:
+  type: "sqlite"
+  path: "data/app.db"
