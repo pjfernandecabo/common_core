@@ -7,7 +7,7 @@ def test_config_loads_correctly():
     assert cfg.logging["level"] in ["INFO", "DEBUG", "WARNING"]
 
 def test_logger_initializes(tmp_path):
-    from core.logger import setup_logger
+    from core.config.logger import setup_logger
     log_file = tmp_path / "test.log"
     logger = setup_logger("INFO", str(log_file))
     logger.info("test message")

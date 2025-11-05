@@ -1,0 +1,9 @@
+pydantic<3.0,>=2.7
+fastapi<1.0,>=0.111
+loguru<1.0,>=0.7
+rich<14.0,>=13.7
+
+[dev]
+pytest
+ruff
+mypy

@@ -1,5 +1,5 @@
 from core.config_loader import ConfigLoader
-from core.logger import setup_logger
+from core.config.logger import setup_logger
 from core.base_agent import BaseAgent
 
 class DemoAgent(BaseAgent):

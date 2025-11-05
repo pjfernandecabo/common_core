@@ -1,0 +1,21 @@
+[project]
+name = "common-core"
+version = "0.1.0"
+description = "Common technical core for AI/ML and app infrastructure"
+authors = [{ name = "Pedro", email = "pedro.fdc@gmail.com" }]
+requires-python = ">=3.10,<3.12"
+readme = "README.md"
+
+dependencies = [
+    "pydantic>=2.7,<3.0",
+    "fastapi>=0.111,<1.0",
+    "loguru>=0.7,<1.0",
+    "rich>=13.7,<14.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff", "mypy"]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
