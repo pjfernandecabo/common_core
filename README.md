@@ -2,12 +2,125 @@
 
 Base mínima modular para proyectos de AI, IoT y aplicaciones generativas.
 
-## Estructura
+## Estructura modular primaria
 - `core/` → configuración, logging, agentes base, utilidades
 - `settings.yaml` → configuración central
 - `tests/` → validación con pytest
 - `Makefile` → tareas locales (test, lint, run)
 
+Un primer esqueleto
+```css
+/common_core/
+├── core/
+│   ├── config/               # Carga YAML/TOML + validación con Pydantic
+│   ├── logging/              # Logging unificado (JSON + consola)
+│   ├── db/                   # Conectores ORM (SQLModel / Mongo / TinyDB)
+│   ├── ai/                   # Módulos comunes de IA (RAG, LLM, RL)
+│   ├── utils/                # Funciones de sistema, paths, tiempos
+│   └── security/             # Auth local, cifrado, tokens internos
+│
+├── services/
+│   ├── api/                  # Endpoints FastAPI base
+│   ├── ui/                   # Interfaces (Streamlit, Flask, etc.)
+│   ├── tasks/                # Jobs periódicos, colas (Celery, etc.)
+│   └── agents/               # Agentes AI o controladores de lógica
+│
+├── tests/
+│   ├── unit/
+│   └── integration/
+│
+├── data/
+│   ├── datasets/
+│   ├── logs/
+│   └── stats/
+│
+├── settings.yaml
+├── main.py                   # Entry point (FastAPI o CLI)
+└── README.md
+
+```
+
+## Funcionamiento core-apps
+
+```css
+/common_core/
+│
+├── core/
+│   ├── logging/
+│   ├── config/
+│   └── db/
+│
+├── tests_core/                  # Tests base compartidos
+│   ├── test_logging.py
+│   ├── test_config.py
+│   └── test_db.py
+│
+└── pytest.ini                   # Config general de pytest
+
+/app_cctv/
+│
+├── core/                        # copia o submódulo de common_core
+├── tests/
+│   ├── test_motion_detection.py
+│   └── test_integration_camera.py
+└── pytest.ini
+
+```
+```css
+projects/
+├── common_core/
+│   ├── pyproject.toml
+│   └── runtime.txt        (python-3.10.18)
+├── ai_email_agent/
+│   ├── pyproject.toml
+│   ├── runtime.txt        (python-3.10.18)
+│   ├── env_conda.yml      (opcional)
+│   └── uv.lock
+└── ai_surveillance/
+    ├── pyproject.toml
+    ├── runtime.txt        (python-3.13.2)
+    ├── env_conda.yml
+    └── uv.lock
+
+```
+
+
+
+Y en Github
+
+```css
+/repos/
+├── common_core/
+│   └── (tests_core/, core/, etc.)
+├── app_cctv/
+│   └── core/ (submodule -> ../common_core)
+└── app_gmail_agent/
+    └── core/ (submodule -> ../common_core)
+
+```
+Situacion actual V0.1
+
+| Tema                 | Estado actual   | Estrategia                            |
+| -------------------- | --------------- | ------------------------------------- |
+| Tests automáticos    | Concepto claro  | Crear suite central en `common_core`  |
+| Multi-lenguaje       | Python base     | Replicar estructura en Node/TS        |
+| Cookiecutter         | Nuevo           | Generará plantillas automáticas       |
+| Control de versiones | Necesita setup  | Git + submódulos                      |
+| CI/CD                | No implementado | Empezar local con `Makefile` y pytest |
+
+
+## Manejo versiones Python
+
+| Nivel                    | Qué define            | Dónde se controla            | Herramienta recomendada |
+| ------------------------ | --------------------- | ---------------------------- | ----------------------- |
+| Python                   | versión base (3.10.x) | `runtime.txt`                | `pyenv` o `uv`          |
+| Dependencias comunes     | baseline              | `common_core/pyproject.toml` | Poetry / Hatch / pip    |
+| Dependencias específicas | app individual        | `app/pyproject.toml`         | uv o pip                |
+| Compatibilidad           | entre core y app      | versionado semántico         | tags y requirements     |
+
+
+
+## Version V0.1
 ```css
 common_core_v0.1/
 ├── core/
@@ -22,8 +135,11 @@ common_core_v0.1/
 ├── Makefile
 ├── tests/
 │   └── test_core.py
-└── README.md
-
+├── README.md
+├── pyproject.toml       # o requirements.txt (según el gestor)
+├── setup.py             # si es instalable local
+├── runtime.txt          # versión de Python base
+└── requirements-dev.txt # herramientas de testing, linting
 ```
 
 ## Start & Running
